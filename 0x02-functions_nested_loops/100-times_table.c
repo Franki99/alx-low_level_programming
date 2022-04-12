@@ -1,7 +1,6 @@
 #include "main.h"
 /**
  * print_times_table - prints n times table starting with 0.
- *
  * @n: takes an integer
  */
 void print_times_table(int n)
@@ -35,8 +34,9 @@ else if (k <= 99 && k >= 10)
 {
 _putchar((k / 10) + '0');
 }
-_putchar('\n');
+_putchar((k % 10) + '0');
 }
+_putchar('\n');
 }
 }
 }
