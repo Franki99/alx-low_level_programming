@@ -25,6 +25,12 @@ end_c = s;
 
 for (i = 0; i < count - 1; i++)
 {
+end_c++;
+}
+
+
+for (i = 0; i < count / 2; i++)
+{
 
 
 c = *end_c;
