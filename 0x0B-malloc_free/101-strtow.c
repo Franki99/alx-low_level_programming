@@ -1,82 +1,207 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
+
+
 
 /**
- * wordcount - counts number of words
- * @s: string
- * Return: int
- */
-int wordcount(char *sw)
-{
-int *l, *wc;
-
-l = 0, wc = 0;
-if (*(sw + l) == ' ')
-l++;
-while (*(sw + l))
-{
-if (*(sw + l) == ' ' && *(sw + l - 1) != ' ')
-wc++;
-l++;
-}
-return (*wc);
-}
-/**
- * trailingsp - moves address to remove traling whitespaces
- * @st: string
- * Return: pointer
- */
-
-char *trailingsp(char *st)
-{
-while (*st == ' ')
-st++;
-return (st);
-}
-/**
- * strtow - splits string into words
- * @str: string
- * Return: double pointer
- */
+ *
+ *  * strtow - splits a string into words
+ *
+ *   * @str: string of words to be split
+ *
+ *    * Return: double pointer to strings
+ *
+ *     */
 
 char **strtow(char *str)
-{
-char **s, *ts;
-int l, l1, wc, i, j, ar, k;
 
-if (str == NULL || *str == 0)
-return (0);
-ar = 0;
-wc = wordcount(*str);
-if (wc == 0)
-return (0);
-s = malloc((wc + 1) * sizeof(char *));
-if (s == 0)
-return 0;
-ts = trailingsp(str);
-for (i = 0; i < wc; i++)
-{	
-l = 0;
-while (*(ts + l) != ' ' && *(ts + l) != 0)
-l++;
-s[i] == malloc((l + 1) * sizeof(char));
-if (s[i] == 0)
 {
-ar = 1;
-break;
+
+		char **ptr;
+
+			int i, k, len, start, end, j = 0;
+
+				int words =  countWords(str);
+
+
+
+					if (!str || !countWords(str))
+
+								return (NULL);
+
+						ptr = malloc(sizeof(char *) * (words + 1));
+
+							if (!ptr)
+
+										return (NULL);
+
+								for (i = 0; i < words; i++)
+
+										{
+
+													start = startIndex(str, j);
+
+															end = endIndex(str, start);
+
+																	len = end - start;
+
+																			ptr[i] = malloc(sizeof(char) * (len + 1));
+
+																					if (!ptr[i])
+
+																								{
+
+																												i -= 1;
+
+																															while (i >= 0)
+
+																																			{
+
+																																								free(ptr[i]);
+
+																																													i--;
+
+																																																}
+
+																																		free(ptr);
+
+																																					return (NULL);
+
+																																							}
+
+																							for (k = 0; k < len; k++)
+
+																											ptr[i][k] = str[start++];
+
+																									ptr[i][k++] = '\0';
+
+																											j = end + 1;
+
+																												}
+
+									ptr[i] = NULL;
+
+										return (ptr);
+
 }
-for (j = 0, l1 = 0; l1 < l; l1++, j++)
-s[i][j] = *(ts + l1);
-s[i][j] = '\0';
-ts = trailingsp(ts + l);
-}
-s[i] = NULL;
-if (ar == 1)
+
+
+
+/**
+ *
+ *  * isSpace - determines if character is a space or not
+ *
+ *   * @c: input char
+ *
+ *    * Return: 1 if true or 0 or not
+ *
+ *     */
+
+int isSpace(char c)
+
 {
-for (k = 0; k <= i; k++)
-free(s[k]);
-free(s);
+
+		return (c == ' ');
+
 }
-return (s);
+
+
+
+/**
+ *
+ *  * startIndex - returns first index of non-space char
+ *
+ *   * @s: input string
+ *
+ *    * @index: starting index
+ *
+ *     * Return: index of first non-space char
+ *
+ *      */
+
+int startIndex(char *s, int index)
+
+{
+
+
+
+		while (isSpace(*(s + index)))
+
+					index++;
+
+			return (index);
+
+}
+
+
+
+/**
+ *
+ *  * endIndex - returns last index of non-space char
+ *
+ *   * @s: input string
+ *
+ *    * @index: starting index
+ *
+ *     * Return: index of last index of non-space char
+ *
+ *      */
+
+int endIndex(char *s, int index)
+
+{
+
+		while (!isSpace(*(s + index)))
+
+					index++;
+
+			return (index);
+
+}
+
+
+
+/**
+ *
+ *  * countWords - counts numbers of words in string
+ *
+ *   * @s: input string
+ *
+ *    * Return: number of words
+ *
+ *     */
+
+int countWords(char *s)
+
+{
+
+		int wordOn = 0;
+
+			int words = 0;
+
+
+
+				while (*s)
+
+						{
+
+									if (isSpace(*s) && wordOn)
+
+													wordOn = 0;
+
+											else if (!isSpace(*s) && !wordOn)
+
+														{
+
+																		wordOn = 1;
+
+																					words++;
+
+																							}
+
+													s++;
+
+														}
+
+					return (words);
+
 }
