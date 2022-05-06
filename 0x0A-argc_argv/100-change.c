@@ -1,50 +1,52 @@
-#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 /**
- * main - prints minimum number of coins to make change for an amount of money.
- * @argc: number of argumenta passed.
- * @argv: pointer to array of size argc, containing arguments passed.
- *
- * Return: 0 on success and 1 on error.
+ * main - function
+ * @argc: length of argv
+ * @argv: number of argument
+ * Return: Always 0
  */
+
 int main(int argc, char *argv[])
 {
-int change, num;
+/*Declaring variables*/
+int position, total, change, aux;
+int coins[] = {25, 10, 5, 2, 1};
 
-change = 0;
-if (argc == 2)
-{
-num = atoi(argv[1]);
-if (num > 0)
-{
-for (; num >= 25; change++)
-{
-num = num - 25;
-}
-for (; num >= 10; change++)
-{
-num = num - 10;
-for (; num >= 5; change++)
-{
-num = num - 5;
-}
-for (; num >= 2; change++)
-{
-num = num - 2;
-}
-for (; num >= 1; change++)
-{
-num = num - 1;
-}
-}
-printf("%d\n", change);
-return (0);
-}
-else
+/*Array int*/
+position = total = change = aux = 0;
+
+if (argc != 2)
 {
 printf("Error\n");
 return (1);
 }
+
+total = atoi(argv[1]);
+
+/*Covert str to int*/
+if (total <= 0)
+{
+printf("0\n");
+return (0);
+}
+
+/*Declaring While*/
+
+while (coins[position] != '\0')
+{
+if (total >= coins[position])
+{
+aux = (total / coins[position]);
+change += aux;
+total -= coins[position] * aux;
+}
+
+position++;
+
+}
+
+printf("%d\n", change);
+return (0);
 }
