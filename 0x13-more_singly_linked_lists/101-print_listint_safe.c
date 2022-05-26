@@ -1,5 +1,4 @@
 #include "lists.h"
-
 /**
  * print_listint_safe -  function that prints a listint_t linked list
  * @head: Head of a list.
@@ -26,4 +25,3 @@ break;
 
 return (nnodes);
 }
-
